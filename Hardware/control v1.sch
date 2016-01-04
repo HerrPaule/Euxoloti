@@ -7101,14 +7101,14 @@ Metric Code Size 5664</description>
 </class>
 </classes>
 <parts>
-<part name="POT1" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT2" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT3" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT4" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT5" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT6" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT7" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
-<part name="POT8" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_"/>
+<part name="POT1" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT2" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT3" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT4" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT5" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT6" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT7" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
+<part name="POT8" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_" value="10K"/>
 <part name="JP-POT" library="pinhead 2" deviceset="PINHD-1X10" device="_2.54"/>
 <part name="B1" library="og-switch" deviceset="LP4OA1PBCTG" device=""/>
 <part name="B2" library="og-switch" deviceset="LP4OA1PBCTG" device=""/>
@@ -7147,15 +7147,11 @@ Metric Code Size 5664</description>
 <part name="CV8" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
 <part name="GND20" library="supply1" deviceset="GND" device=""/>
 <part name="JP3-CV" library="pinhead" deviceset="PINHD-1X8" device=""/>
-<part name="R1" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R2" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R3" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R4" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R5" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R6" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R7" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="R8" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="68R"/>
-<part name="JP3" library="pinhead" deviceset="PINHD-1X4" device=""/>
+<part name="R1" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="34,8R"/>
+<part name="R3" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="34,8R"/>
+<part name="R5" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="34,8R"/>
+<part name="R7" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="34,8R"/>
+<part name="JP3-AUDIO" library="pinhead" deviceset="PINHD-1X4" device=""/>
 <part name="JP1" library="pinhead" deviceset="PINHD-1X30" device=""/>
 <part name="GND21" library="supply1" deviceset="GND" device=""/>
 <part name="GND22" library="supply1" deviceset="GND" device=""/>
@@ -7352,9 +7348,9 @@ Metric Code Size 5664</description>
 <label x="38.1" y="88.9" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP-POT" gate="A" pin="10"/>
-<wire x1="93.98" y1="71.12" x2="88.9" y2="71.12" width="0.1524" layer="91"/>
-<label x="88.9" y="71.12" size="1.016" layer="95" rot="R180" xref="yes"/>
+<pinref part="JP-POT" gate="A" pin="8"/>
+<wire x1="93.98" y1="76.2" x2="88.9" y2="76.2" width="0.1524" layer="91"/>
+<label x="88.9" y="76.2" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="POT6" class="0">
@@ -7364,9 +7360,9 @@ Metric Code Size 5664</description>
 <label x="38.1" y="63.5" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP-POT" gate="A" pin="9"/>
-<wire x1="93.98" y1="73.66" x2="88.9" y2="73.66" width="0.1524" layer="91"/>
-<label x="88.9" y="73.66" size="1.016" layer="95" rot="R180" xref="yes"/>
+<pinref part="JP-POT" gate="A" pin="10"/>
+<wire x1="93.98" y1="71.12" x2="88.9" y2="71.12" width="0.1524" layer="91"/>
+<label x="88.9" y="71.12" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="POT7" class="0">
@@ -7376,9 +7372,9 @@ Metric Code Size 5664</description>
 <label x="38.1" y="38.1" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP-POT" gate="A" pin="8"/>
-<wire x1="93.98" y1="76.2" x2="88.9" y2="76.2" width="0.1524" layer="91"/>
-<label x="88.9" y="76.2" size="1.016" layer="95" rot="R180" xref="yes"/>
+<pinref part="JP-POT" gate="A" pin="9"/>
+<wire x1="93.98" y1="73.66" x2="88.9" y2="73.66" width="0.1524" layer="91"/>
+<label x="88.9" y="73.66" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="POT8" class="0">
@@ -7545,13 +7541,9 @@ Metric Code Size 5664</description>
 <instance part="GND11" gate="1" x="116.84" y="38.1"/>
 <instance part="GND12" gate="1" x="162.56" y="35.56"/>
 <instance part="R1" gate="G$1" x="-12.7" y="68.58"/>
-<instance part="R2" gate="G$1" x="-12.7" y="76.2"/>
 <instance part="R3" gate="G$1" x="58.42" y="71.12"/>
-<instance part="R4" gate="G$1" x="58.42" y="76.2"/>
 <instance part="R5" gate="G$1" x="111.76" y="71.12"/>
-<instance part="R6" gate="G$1" x="111.76" y="76.2"/>
 <instance part="R7" gate="G$1" x="157.48" y="71.12"/>
-<instance part="R8" gate="G$1" x="157.48" y="76.2"/>
 </instances>
 <busses>
 </busses>
@@ -7623,9 +7615,6 @@ Metric Code Size 5664</description>
 <wire x1="55.88" y1="43.18" x2="63.5" y2="43.18" width="0.1524" layer="91"/>
 <junction x="63.5" y="43.18"/>
 <pinref part="R3" gate="G$1" pin="2"/>
-<pinref part="R4" gate="G$1" pin="2"/>
-<wire x1="63.5" y1="76.2" x2="63.5" y2="71.12" width="0.1524" layer="91"/>
-<junction x="63.5" y="71.12"/>
 </segment>
 <segment>
 <pinref part="GND11" gate="1" pin="GND"/>
@@ -7639,9 +7628,6 @@ Metric Code Size 5664</description>
 <wire x1="109.22" y1="43.18" x2="116.84" y2="43.18" width="0.1524" layer="91"/>
 <junction x="116.84" y="43.18"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="116.84" y1="76.2" x2="116.84" y2="71.12" width="0.1524" layer="91"/>
-<junction x="116.84" y="71.12"/>
 </segment>
 <segment>
 <pinref part="GND12" gate="1" pin="GND"/>
@@ -7655,28 +7641,19 @@ Metric Code Size 5664</description>
 <wire x1="154.94" y1="43.18" x2="162.56" y2="43.18" width="0.1524" layer="91"/>
 <junction x="162.56" y="43.18"/>
 <pinref part="R7" gate="G$1" pin="2"/>
-<pinref part="R8" gate="G$1" pin="2"/>
-<wire x1="162.56" y1="76.2" x2="162.56" y2="71.12" width="0.1524" layer="91"/>
-<junction x="162.56" y="71.12"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="R2" gate="G$1" pin="2"/>
 <pinref part="R1" gate="G$1" pin="2"/>
-<wire x1="-7.62" y1="76.2" x2="-7.62" y2="68.58" width="0.1524" layer="91"/>
 <pinref part="B1" gate="G$1" pin="L1"/>
 <wire x1="-7.62" y1="68.58" x2="-5.08" y2="68.58" width="0.1524" layer="91"/>
-<junction x="-7.62" y="68.58"/>
 </segment>
 </net>
 <net name="L1" class="0">
 <segment>
-<pinref part="R2" gate="G$1" pin="1"/>
 <pinref part="R1" gate="G$1" pin="1"/>
-<wire x1="-17.78" y1="76.2" x2="-17.78" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="68.58" x2="-20.32" y2="68.58" width="0.1524" layer="91"/>
-<junction x="-17.78" y="68.58"/>
 <label x="-20.32" y="68.58" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
@@ -7684,9 +7661,6 @@ Metric Code Size 5664</description>
 <segment>
 <pinref part="B2" gate="G$1" pin="L2"/>
 <pinref part="R3" gate="G$1" pin="1"/>
-<pinref part="R4" gate="G$1" pin="1"/>
-<wire x1="53.34" y1="76.2" x2="53.34" y2="71.12" width="0.1524" layer="91"/>
-<junction x="53.34" y="71.12"/>
 </segment>
 </net>
 <net name="L2" class="0">
@@ -7700,9 +7674,6 @@ Metric Code Size 5664</description>
 <segment>
 <pinref part="B3" gate="G$1" pin="L2"/>
 <pinref part="R5" gate="G$1" pin="1"/>
-<pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="106.68" y1="76.2" x2="106.68" y2="71.12" width="0.1524" layer="91"/>
-<junction x="106.68" y="71.12"/>
 </segment>
 </net>
 <net name="L3" class="0">
@@ -7716,9 +7687,6 @@ Metric Code Size 5664</description>
 <segment>
 <pinref part="B4" gate="G$1" pin="L2"/>
 <pinref part="R7" gate="G$1" pin="1"/>
-<pinref part="R8" gate="G$1" pin="1"/>
-<wire x1="152.4" y1="76.2" x2="152.4" y2="71.12" width="0.1524" layer="91"/>
-<junction x="152.4" y="71.12"/>
 </segment>
 </net>
 <net name="L4" class="0">
@@ -7734,7 +7702,7 @@ Metric Code Size 5664</description>
 <plain>
 </plain>
 <instances>
-<instance part="JP3" gate="A" x="53.34" y="27.94"/>
+<instance part="JP3-AUDIO" gate="A" x="53.34" y="27.94"/>
 <instance part="A-IN1" gate="G$1" x="-5.08" y="73.66" rot="MR0"/>
 <instance part="A-OUT2" gate="G$1" x="50.8" y="55.88"/>
 <instance part="A-OUT1" gate="G$1" x="50.8" y="73.66"/>
@@ -7757,7 +7725,7 @@ Metric Code Size 5664</description>
 <junction x="2.54" y="76.2"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="A" pin="1"/>
+<pinref part="JP3-AUDIO" gate="A" pin="1"/>
 <wire x1="50.8" y1="33.02" x2="45.72" y2="33.02" width="0.1524" layer="91"/>
 <label x="45.72" y="33.02" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7769,7 +7737,7 @@ Metric Code Size 5664</description>
 <pinref part="A-IN2" gate="G$1" pin="TIP"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="A" pin="4"/>
+<pinref part="JP3-AUDIO" gate="A" pin="4"/>
 <wire x1="50.8" y1="25.4" x2="45.72" y2="25.4" width="0.1524" layer="91"/>
 <label x="45.72" y="25.4" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7781,7 +7749,7 @@ Metric Code Size 5664</description>
 <pinref part="A-OUT1" gate="G$1" pin="TIP"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="A" pin="2"/>
+<pinref part="JP3-AUDIO" gate="A" pin="2"/>
 <wire x1="50.8" y1="30.48" x2="45.72" y2="30.48" width="0.1524" layer="91"/>
 <label x="45.72" y="30.48" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7793,7 +7761,7 @@ Metric Code Size 5664</description>
 <pinref part="A-OUT2" gate="G$1" pin="TIP"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="A" pin="3"/>
+<pinref part="JP3-AUDIO" gate="A" pin="3"/>
 <wire x1="50.8" y1="27.94" x2="45.72" y2="27.94" width="0.1524" layer="91"/>
 <label x="45.72" y="27.94" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7806,6 +7774,9 @@ Metric Code Size 5664</description>
 <segment>
 <pinref part="A-IN1" gate="G$1" pin="SLEEVE"/>
 <pinref part="GND15" gate="1" pin="GND"/>
+<pinref part="A-IN1" gate="G$1" pin="SWITCH"/>
+<wire x1="0" y1="73.66" x2="0" y2="71.12" width="0.1524" layer="91"/>
+<junction x="0" y="71.12"/>
 </segment>
 </net>
 </nets>

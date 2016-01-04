@@ -15845,22 +15845,22 @@ info@gushh.net</description>
 <part name="IC4" library="linear" deviceset="TL074" device="P" value="MCP6004"/>
 <part name="R21" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND2" library="SparkFun" deviceset="GND" device=""/>
-<part name="R25" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="30k"/>
+<part name="R25" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="R22" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="200k"/>
 <part name="C10" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R24" library="resistor-mod" deviceset="R-EU_" device="0207/10" value="100k"/>
 <part name="GND9" library="SparkFun" deviceset="GND" device=""/>
-<part name="R26" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="30k"/>
+<part name="R26" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="R23" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="200k"/>
 <part name="C11" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R38" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND11" library="SparkFun" deviceset="GND" device=""/>
-<part name="R34" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="60k"/>
+<part name="R34" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="R36" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="200k"/>
 <part name="C20" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R39" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND13" library="SparkFun" deviceset="GND" device=""/>
-<part name="R35" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="30k"/>
+<part name="R35" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="C21" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R37" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="200k"/>
 <part name="C23" library="resistor-mod" deviceset="C-EU" device="025-025X050" value="100n"/>
@@ -15889,22 +15889,22 @@ info@gushh.net</description>
 <part name="IC3" library="linear" deviceset="TL074" device="P" value="MCP6004"/>
 <part name="R7" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND23" library="SparkFun" deviceset="GND" device=""/>
-<part name="R8" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="30k"/>
+<part name="R8" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="R9" library="resistor-mod" deviceset="R-EU_" device="0207/10" value="200k"/>
 <part name="C9" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R10" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND26" library="SparkFun" deviceset="GND" device=""/>
-<part name="R13" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="60k"/>
+<part name="R13" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="R17" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="200k"/>
 <part name="C15" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R18" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND29" library="SparkFun" deviceset="GND" device=""/>
-<part name="R19" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="60k"/>
+<part name="R19" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="66,5K"/>
 <part name="R20" library="resistor-mod" deviceset="R-EU_" device="0207/10" value="200k"/>
 <part name="C17" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R27" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="100k"/>
 <part name="GND31" library="SparkFun" deviceset="GND" device=""/>
-<part name="R28" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="30k"/>
+<part name="R28" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="33K"/>
 <part name="C18" library="resistor-mod" deviceset="C-EU" device="050-025X075" value="1n"/>
 <part name="R29" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="200k"/>
 <part name="C19" library="resistor-mod" deviceset="C-EU" device="025-025X050" value="100n"/>
@@ -15953,8 +15953,8 @@ info@gushh.net</description>
 <part name="JP5-AUDIO" library="pinhead 2" deviceset="PINHD-1X4" device="_2.54"/>
 <part name="+3V10" library="supply1" deviceset="+3V3" device=""/>
 <part name="JP-CV" library="pinhead 2" deviceset="PINHD-1X8" device="_2.54"/>
-<part name="C22" library="resistor-mod" deviceset="CPOL-EU" device="E1.8-4"/>
-<part name="C24" library="resistor-mod" deviceset="CPOL-EU" device="E1.8-4"/>
+<part name="C22" library="resistor-mod" deviceset="CPOL-EU" device="E1.8-4" value="10uF"/>
+<part name="C24" library="resistor-mod" deviceset="CPOL-EU" device="E1.8-4" value="10uF"/>
 <part name="C8" library="resistor-mod" deviceset="CPOL-EU" device="E1.8-4" value="10uF"/>
 <part name="C14" library="resistor-mod" deviceset="CPOL-EU" device="E1.8-4" value="10uF"/>
 <part name="TP-10V" library="pinhead 2" deviceset="PINHD-1X1" device="_2.54"/>
