@@ -14864,9 +14864,9 @@ info@gushh.net</description>
 <wire x1="2.8575" y1="0.3175" x2="2.8575" y2="-0.635" width="0.3048" layer="21"/>
 <wire x1="-2.6549" y1="0.381" x2="-2.2537" y2="0.381" width="0.2032" layer="21"/>
 <wire x1="-0.3175" y1="2.8575" x2="-2.8575" y2="0.635" width="0.3048" layer="21" curve="89.997744"/>
-<pad name="3" x="-2.54" y="0.3175" drill="0.8128" diameter="1.6764" shape="long" rot="R90"/>
-<pad name="2" x="0" y="0.3175" drill="0.8128" diameter="1.6764" shape="long" rot="R90"/>
-<pad name="1" x="2.54" y="0.3175" drill="0.8128" diameter="1.6764" shape="long" rot="R90" first="yes"/>
+<pad name="-" x="-2.54" y="0.3175" drill="0.8128" diameter="1.6764" shape="long" rot="R90"/>
+<pad name="+" x="0" y="0.3175" drill="0.8128" diameter="1.6764" shape="long" rot="R90"/>
+<pad name="NC" x="2.54" y="0.3175" drill="0.8128" diameter="1.6764" shape="long" rot="R90" first="yes"/>
 <text x="-1.905" y="-1.905" size="0.4064" layer="25" ratio="10">&gt;NAME</text>
 <text x="-1.905" y="-2.54" size="0.4064" layer="27" ratio="10">&gt;VALUE</text>
 </package>
@@ -14881,8 +14881,8 @@ info@gushh.net</description>
 <wire x1="-1.905" y1="1.397" x2="-1.905" y2="0.762" width="0.254" layer="94"/>
 <text x="3.81" y="0" size="1.778" layer="95">&gt;NAME</text>
 <text x="3.81" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="A" x="0" y="-5.08" visible="pad" length="middle" direction="out" rot="R90"/>
-<pin name="C" x="0" y="5.08" visible="pad" length="middle" direction="in" rot="R270"/>
+<pin name="-" x="0" y="-5.08" visible="pad" length="middle" direction="out" rot="R90"/>
+<pin name="+" x="0" y="5.08" visible="pad" length="middle" direction="in" rot="R270"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -14893,8 +14893,8 @@ info@gushh.net</description>
 <devices>
 <device name="CYM3-2.5" package="SOT-23">
 <connects>
-<connect gate="G$1" pin="A" pad="2"/>
-<connect gate="G$1" pin="C" pad="1"/>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -14902,8 +14902,8 @@ info@gushh.net</description>
 </device>
 <device name="DIP" package="TO-92">
 <connects>
-<connect gate="G$1" pin="A" pad="2"/>
-<connect gate="G$1" pin="C" pad="1"/>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -15925,18 +15925,18 @@ info@gushh.net</description>
 <part name="IC2" library="linear" deviceset="TL074" device="P"/>
 <part name="GND18" library="SparkFun" deviceset="GND" device=""/>
 <part name="R1" library="resistor-mod" deviceset="R-EU_" device="0207/10" value="22K"/>
-<part name="R2" library="resistor-mod" deviceset="R-EU_" device="0207/12" value="3,3K"/>
+<part name="R2" library="resistor-mod" deviceset="R-EU_" device="0207/12" value="1K"/>
 <part name="R3" library="resistor-mod" deviceset="R-TRIMM" device="3296P" value="5K"/>
 <part name="R4" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="1K"/>
 <part name="R5" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="22K"/>
-<part name="R6" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="3,3K"/>
+<part name="R6" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="1K"/>
 <part name="R11" library="resistor-mod" deviceset="R-TRIMM" device="3296P" value="5K"/>
 <part name="R12" library="resistor-mod" deviceset="R-EU_" device="0207/10" value="1K"/>
 <part name="GND33" library="SparkFun" deviceset="GND" device=""/>
 <part name="JP1-AU_FROM_AXO" library="pinhead" deviceset="PINHD-1X2" device="/90"/>
-<part name="R14" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="3,3K"/>
+<part name="R14" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="15K"/>
 <part name="R15" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="22K"/>
-<part name="R16" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="3,3K"/>
+<part name="R16" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="15K"/>
 <part name="R31" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="22K"/>
 <part name="+3V13" library="supply1" deviceset="+3V3" device=""/>
 <part name="+3V14" library="supply1" deviceset="+3V3" device=""/>
@@ -15964,7 +15964,6 @@ info@gushh.net</description>
 <part name="GND8" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="R40" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="47K"/>
-<part name="R41" library="resistor-mod" deviceset="R-EU_" device="0207/7" value="47K"/>
 <part name="GND12" library="SparkFun" deviceset="GND" device=""/>
 <part name="P+5" library="SparkFun" deviceset="VCC" device=""/>
 <part name="C25" library="resistor-mod" deviceset="C-EU" device="025-025X050" value="100n"/>
@@ -15989,8 +15988,6 @@ info@gushh.net</description>
 <text x="-48.26" y="-119.38" size="1.778" layer="97">-5.0 to 5.0</text>
 <text x="-48.26" y="-63.5" size="1.778" layer="97">-5.0 to 5.0</text>
 <text x="-127" y="-63.5" size="1.778" layer="97">0.0 to 5.0</text>
-<text x="46.228" y="54.102" size="1.778" layer="104">out: 1,5Vpp</text>
-<text x="-16.002" y="42.164" size="1.778" layer="104">in: 10Vpp</text>
 <text x="193.04" y="-134.62" size="2.54" layer="95">1</text>
 <text x="101.6" y="-111.76" size="2.54" layer="95">Paul 2015</text>
 <text x="101.6" y="-116.84" size="2.54" layer="95">contact@irieelectronics.de</text>
@@ -16889,13 +16886,6 @@ info@gushh.net</description>
 <junction x="45.72" y="40.64"/>
 </segment>
 </net>
-<net name="LIN+" class="0">
-<segment>
-<wire x1="66.04" y1="50.8" x2="71.12" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="C22" gate="G$1" pin="+"/>
-<label x="71.12" y="50.8" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="N$21" class="0">
 <segment>
 <pinref part="R31" gate="G$1" pin="1"/>
@@ -16918,13 +16908,6 @@ info@gushh.net</description>
 <pinref part="R33" gate="G$1" pin="A"/>
 <wire x1="129.54" y1="40.64" x2="127" y2="40.64" width="0.1524" layer="91"/>
 <junction x="127" y="40.64"/>
-</segment>
-</net>
-<net name="RIN+" class="0">
-<segment>
-<wire x1="147.32" y1="50.8" x2="152.4" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="C24" gate="G$1" pin="+"/>
-<label x="152.4" y="50.8" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="CS1" class="0">
@@ -17088,6 +17071,20 @@ info@gushh.net</description>
 <label x="106.68" y="33.02" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
+<net name="LIN-" class="0">
+<segment>
+<wire x1="66.04" y1="50.8" x2="71.12" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="C22" gate="G$1" pin="+"/>
+<label x="71.12" y="50.8" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="RIN-" class="0">
+<segment>
+<wire x1="147.32" y1="50.8" x2="152.4" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="C24" gate="G$1" pin="+"/>
+<label x="152.4" y="50.8" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -17153,6 +17150,13 @@ info@gushh.net</description>
 <pinref part="JP4" gate="A" pin="3"/>
 <wire x1="40.64" y1="134.62" x2="53.34" y2="134.62" width="0.1524" layer="91"/>
 <junction x="53.34" y="134.62"/>
+<pinref part="AXOLOTICORE" gate="G$1" pin="GND4"/>
+<wire x1="76.2" y1="124.46" x2="68.58" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="124.46" x2="68.58" y2="134.62" width="0.1524" layer="91"/>
+<pinref part="AXOLOTICORE" gate="G$1" pin="GND5"/>
+<wire x1="76.2" y1="121.92" x2="68.58" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="121.92" x2="68.58" y2="124.46" width="0.1524" layer="91"/>
+<junction x="68.58" y="124.46"/>
 </segment>
 <segment>
 <pinref part="JP_POT" gate="A" pin="2"/>
@@ -17603,6 +17607,20 @@ info@gushh.net</description>
 <label x="144.78" y="198.12" size="1.016" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
+<net name="LIN-" class="0">
+<segment>
+<pinref part="AXOLOTICORE" gate="G$1" pin="LIN-"/>
+<wire x1="76.2" y1="116.84" x2="71.12" y2="116.84" width="0.1524" layer="91"/>
+<label x="71.12" y="116.84" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="RIN-" class="0">
+<segment>
+<pinref part="AXOLOTICORE" gate="G$1" pin="RIN-"/>
+<wire x1="76.2" y1="111.76" x2="71.12" y2="111.76" width="0.1524" layer="91"/>
+<label x="71.12" y="111.76" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -17644,7 +17662,6 @@ info@gushh.net</description>
 <instance part="SV1" gate="G$1" x="-12.7" y="119.38"/>
 <instance part="TP-10V" gate="G$1" x="106.68" y="0"/>
 <instance part="R40" gate="G$1" x="15.24" y="71.12" rot="R270"/>
-<instance part="R41" gate="G$1" x="25.4" y="55.88" rot="R270"/>
 <instance part="GND12" gate="1" x="25.4" y="45.72"/>
 <instance part="P+5" gate="1" x="15.24" y="78.74"/>
 <instance part="C25" gate="G$1" x="15.24" y="55.88"/>
@@ -17668,7 +17685,7 @@ info@gushh.net</description>
 <junction x="91.44" y="-20.32"/>
 <pinref part="C16" gate="G$1" pin="2"/>
 <pinref part="GND69" gate="1" pin="GND"/>
-<pinref part="D3" gate="G$1" pin="C"/>
+<pinref part="D3" gate="G$1" pin="+"/>
 </segment>
 <segment>
 <wire x1="-5.08" y1="121.92" x2="-5.08" y2="119.38" width="0.1524" layer="91"/>
@@ -17718,7 +17735,6 @@ info@gushh.net</description>
 <pinref part="C2" gate="G$1" pin="-"/>
 </segment>
 <segment>
-<pinref part="R41" gate="G$1" pin="2"/>
 <pinref part="GND12" gate="1" pin="GND"/>
 <wire x1="25.4" y1="48.26" x2="25.4" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="C25" gate="G$1" pin="2"/>
@@ -17744,7 +17760,7 @@ info@gushh.net</description>
 <junction x="91.44" y="-7.62"/>
 <pinref part="R30" gate="G$1" pin="2"/>
 <pinref part="C16" gate="G$1" pin="1"/>
-<pinref part="D3" gate="G$1" pin="A"/>
+<pinref part="D3" gate="G$1" pin="-"/>
 <wire x1="91.44" y1="-10.16" x2="91.44" y2="-7.62" width="0.1524" layer="91"/>
 <wire x1="96.52" y1="-7.62" x2="96.52" y2="0" width="0.1524" layer="91"/>
 <pinref part="TP-10V" gate="G$1" pin="1"/>
@@ -17853,14 +17869,11 @@ info@gushh.net</description>
 <segment>
 <pinref part="R40" gate="G$1" pin="2"/>
 <wire x1="15.24" y1="66.04" x2="15.24" y2="60.96" width="0.1524" layer="91"/>
-<pinref part="R41" gate="G$1" pin="1"/>
-<wire x1="15.24" y1="60.96" x2="25.4" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="C25" gate="G$1" pin="1"/>
 <wire x1="15.24" y1="60.96" x2="15.24" y2="58.42" width="0.1524" layer="91"/>
 <junction x="15.24" y="60.96"/>
 <pinref part="D4" gate="1" pin="C"/>
-<wire x1="25.4" y1="60.96" x2="35.56" y2="60.96" width="0.1524" layer="91"/>
-<junction x="25.4" y="60.96"/>
+<wire x1="15.24" y1="60.96" x2="35.56" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="35.56" y1="60.96" x2="48.26" y2="60.96" width="0.1524" layer="91"/>
 <junction x="35.56" y="60.96"/>
 <label x="48.26" y="60.96" size="1.016" layer="95" xref="yes"/>
