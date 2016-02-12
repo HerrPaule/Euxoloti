@@ -2,4 +2,4 @@ The actually used panel is a printed [3mm Alu-Dibond plate](https://de.whitewall
 - Width: 101mm
 - Height: 128mm
 
-Drill position are marked by Crosses.
+Drill positions are marked by Crosses.
