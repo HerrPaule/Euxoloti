@@ -7,3 +7,4 @@ Further deatils about functions and order, check http://irieelectronics.de/euxol
 and the Axoloti Forum: http://community.axoloti.com/t/euxoloti-for-axoloti-eurorack-module/
 
 AXOLOTI: http://axoloti.be
+Book about the Axoloti: https://leanpub.com/getting-started-with-axoloti
