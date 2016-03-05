@@ -1,0 +1,92 @@
+<patch-1.0>
+   <obj type="gpio/in/digital" sha="90fc95d938b6230073e230ead488ad0c23936425" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_1" x="98" y="42">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PB0"/>
+         <combo attributeName="mode" selection="pullup"/>
+      </attribs>
+   </obj>
+   <obj type="script/script2" sha="362a4413ceaefbe716480bf8f9c62eb3587fe6c0" uuid="d39e743cf47c9221f4e99c133430148cf74c68c5" name="enc. script" x="406" y="56">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[int val; 
+int encoder0Pos = 0;
+int encoder0PinALast = false;
+int n = 0;
+bool input1, input2;
+
+void setup (void){
+	input1 = 0;
+	input2 = 0;
+
+	
+}
+
+void loop (void){
+	input1 = in1;
+	input2 = in2;
+	
+   	n = input1;
+
+   if ((encoder0PinALast == 0) && (n == 1)) {
+     if (input2 == 1) {
+       encoder0Pos--;
+     } else {
+       encoder0Pos++;
+     }
+     out1 = encoder0Pos;
+     
+   } 
+    
+   encoder0PinALast = n;
+}]]></sText>
+         </text>
+      </attribs>
+   </obj>
+   <obj type="disp/hex" sha="e21d1bcdfadc4f2009b547d002484bede0762978" uuid="87617898f70d90033f8add921438bf0d11721fdd" name="enc. position" x="560" y="56">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="gpio/in/digital" sha="90fc95d938b6230073e230ead488ad0c23936425" uuid="f59f139e8da912742832dc541157f20f30b7ac1b" name="digital_2" x="98" y="112">
+      <params/>
+      <attribs>
+         <combo attributeName="pad" selection="PB1"/>
+         <combo attributeName="mode" selection="pullup"/>
+      </attribs>
+   </obj>
+   <obj type="disp/bool" sha="330cd7d2342f59124b04a39d118a0ab97185ecaa" uuid="a0ee71d48208b71752cbb8c05e55145106ef3946" name="enc1out1" x="224" y="154">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="disp/bool" sha="330cd7d2342f59124b04a39d118a0ab97185ecaa" uuid="a0ee71d48208b71752cbb8c05e55145106ef3946" name="enc1out2" x="224" y="210">
+      <params/>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="enc. script" outlet="out1_"/>
+         <dest obj="enc. position" inlet="in"/>
+      </net>
+      <net>
+         <source obj="digital_1" outlet="out"/>
+         <dest obj="enc1out1" inlet="in"/>
+         <dest obj="enc. script" inlet="in1_"/>
+      </net>
+      <net>
+         <source obj="digital_2" outlet="out"/>
+         <dest obj="enc1out2" inlet="in"/>
+         <dest obj="enc. script" inlet="in2_"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>708</x>
+      <y>23</y>
+      <width>1211</width>
+      <height>1053</height>
+   </windowPos>
+</patch-1.0>
