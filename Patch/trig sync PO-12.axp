@@ -1,0 +1,127 @@
+<patch-1.0>
+   <obj type="midi/in/clock" sha="91b0b615d5152624e86190bff106bdf7f7eb6b36" uuid="f1aa3a79d6de9bd6d38dc64c9d4bb5c9de4f4198" name="midiclock" x="28" y="56">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="math/divremc" sha="e05d21088634f9097b27f6de095eac6704de1457" uuid="fd7d945542e16344358136d7e22cffd5be704260" name="divremc_1" x="140" y="56">
+      <params/>
+      <attribs>
+         <spinner attributeName="denominator" value="6"/>
+      </attribs>
+   </obj>
+   <obj type="math/divremc" sha="e05d21088634f9097b27f6de095eac6704de1457" uuid="fd7d945542e16344358136d7e22cffd5be704260" name="divremc_2" x="266" y="56">
+      <params/>
+      <attribs>
+         <spinner attributeName="denominator" value="16"/>
+      </attribs>
+   </obj>
+   <obj type="disp/ibar 16" sha="6998eafb11a17e8569492b9ac4fa9710eb907cb8" uuid="302bfed4cde8894229679ce81f6b8a5c5212dd98" name="step 1-16" x="406" y="56">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/i radio 4 v" sha="37aa6f17297981ccdf9a037eecf728e7c0ff0ae4" uuid="b610704137c90b0e43464440b84bfb4fb7d2bb30" name="clock source" x="616" y="56">
+      <params>
+         <int32.vradio name="value" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="714" y="98" text="-MIDI CLOCK"/>
+   <obj type="sel/sel b 16 2t" sha="8e37d7dc4d193739280112614f307c01ffc64701" uuid="e6fd779f9932504fbd82e89685752e5254f80a7e" name="pattern" x="406" y="112">
+      <params>
+         <bin16 name="p1" value="21845"/>
+         <bin16 name="p2" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="714" y="112" text="-LFO SQ"/>
+   <comment type="patch/comment" x="714" y="126" text="-BUTTON"/>
+   <comment type="patch/comment" x="714" y="140" text="-Nothing"/>
+   <comment type="patch/comment" x="294" y="182" text="clock style for PO-12"/>
+   <obj type="lfo/square" sha="b4420b58ca2ae5ece53d53540bc91bc9ed7a4b83" uuid="de6909eb64db13af5b43f979a4c130024b3a4793" name="SQ" x="504" y="224">
+      <params>
+         <frac32.s.map name="pitch" value="-8.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mux/mux 3" sha="4db66cd370d0e7492e898a2becba9e94d3f02bff" uuid="2fca09a96baf24d8c1e4d8ce0adc5f29452021bc" name="mux_2" x="700" y="308">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="conv/interp" sha="4b93f3e0f08b85924e07feabcdfe53fc11aa6a48" uuid="d68c1a8709d8b55e3de8715d727ec0a2d8569d9a" name="interp_1" x="812" y="308">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/button" sha="3a0057991a9376823a6a654a8cf7201abdc31135" uuid="ef3d13774349df85aa9bfecf30dbc91ab8488b3f" name="button" x="532" y="336">
+      <params>
+         <bool32.mom name="b" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="math/gain" sha="cda56a9f0ea80746e47be1a82a59ebc55bdba5d1" uuid="62b1c1a6337c7c8f6aec96408a432477b113cfa0" name="gain_1" x="812" y="392">
+      <params>
+         <frac32.u.map name="amp" value="8.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <comment type="patch/comment" x="994" y="406" text="chain axo -&gt; PO"/>
+   <comment type="patch/comment" x="994" y="420" text="AUDIO L = AUDIO"/>
+   <comment type="patch/comment" x="994" y="434" text="AUDIO R = SYNC"/>
+   <obj type="audio/out stereo" sha="c27566f972d15f25252f61b5cff014a3edce9706" uuid="a1ca7a567f535acc21055669829101d3ee7f0189" name="out_1" x="994" y="448">
+      <params/>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="midiclock" outlet="pos24ppq"/>
+         <dest obj="divremc_1" inlet="a"/>
+      </net>
+      <net>
+         <source obj="divremc_1" outlet="div"/>
+         <dest obj="divremc_2" inlet="a"/>
+      </net>
+      <net>
+         <source obj="divremc_2" outlet="rem"/>
+         <dest obj="step 1-16" inlet="in"/>
+         <dest obj="pattern" inlet="in"/>
+      </net>
+      <net>
+         <source obj="interp_1" outlet="o"/>
+         <dest obj="gain_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="gain_1" outlet="out"/>
+         <dest obj="out_1" inlet="left"/>
+         <dest obj="out_1" inlet="right"/>
+      </net>
+      <net>
+         <source obj="pattern" outlet="o1"/>
+         <dest obj="mux_2" inlet="i0"/>
+      </net>
+      <net>
+         <source obj="SQ" outlet="wave"/>
+         <dest obj="mux_2" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="clock source" outlet="out"/>
+         <dest obj="mux_2" inlet="s"/>
+      </net>
+      <net>
+         <source obj="button" outlet="o"/>
+         <dest obj="mux_2" inlet="i2"/>
+      </net>
+      <net>
+         <source obj="mux_2" outlet="o"/>
+         <dest obj="interp_1" inlet="i"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>261</x>
+      <y>23</y>
+      <width>1513</width>
+      <height>1012</height>
+   </windowPos>
+</patch-1.0>
