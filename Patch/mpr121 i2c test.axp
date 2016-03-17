@@ -1,0 +1,256 @@
+<patch-1.0>
+   <obj type="script/script2" sha="362a4413ceaefbe716480bf8f9c62eb3587fe6c0" uuid="d39e743cf47c9221f4e99c133430148cf74c68c5" name="script2_1" x="420" y="434">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[/*
+ MPR121 example to read touches
+ by Paul 2016 irieelectronics.de
+ 
+ main MPR121 code is from: http://bildr.org/2011/05/mpr121_arduino/
+ */
+
+// MPR121 Register Defines
+#define 	MHD_R	0x2B
+#define 	NHD_R	0x2C
+#define	NCL_R 	0x2D
+#define	FDL_R	0x2E
+#define	MHD_F	0x2F
+#define	NHD_F	0x30
+#define	NCL_F	0x31
+#define	FDL_F	0x32
+#define	ELE0_T	0x41
+#define	ELE0_R	0x42
+#define	ELE1_T	0x43
+#define	ELE1_R	0x44
+#define	ELE2_T	0x45
+#define	ELE2_R	0x46
+#define	ELE3_T	0x47
+#define	ELE3_R	0x48
+#define	ELE4_T	0x49
+#define	ELE4_R	0x4A
+#define	ELE5_T	0x4B
+#define	ELE5_R	0x4C
+#define	ELE6_T	0x4D
+#define	ELE6_R	0x4E
+#define	ELE7_T	0x4F
+#define	ELE7_R	0x50
+#define	ELE8_T	0x51
+#define	ELE8_R	0x52
+#define	ELE9_T	0x53
+#define	ELE9_R	0x54
+#define	ELE10_T	0x55
+#define	ELE10_R	0x56
+#define	ELE11_T	0x57
+#define	ELE11_R	0x58
+#define	FIL_CFG	0x5D
+#define	ELE_CFG	0x5E
+#define 	GPIO_CTRL0	0x73
+#define	GPIO_CTRL1	0x74
+#define 	GPIO_DATA	0x75
+#define	GPIO_DIR	0x76
+#define	GPIO_EN		0x77
+#define	GPIO_SET	0x78
+#define	GPIO_CLEAR	0x79
+#define	GPIO_TOGGLE	0x7A
+#define	ATO_CFG0	0x7B
+#define	ATO_CFGU	0x7D
+#define	ATO_CFGL	0x7E
+#define	ATO_CFGT	0x7F
+
+
+// Global Constants
+#define 	TOU_THRESH	0x06
+#define	REL_THRESH	0x0A
+
+uint8_t *rxbuf;
+uint8_t *txbuf;
+
+// systime_t tmo = MS2ST(4);
+
+uint8_t touchStates[12]; //to keep track of the previous touch states
+
+void setup (void){
+	static uint8_t _txbuf[8] __attribute__ ((section (".sram2")));
+	static uint8_t _rxbuf[8] __attribute__ ((section (".sram2")));
+	txbuf = _txbuf;
+	rxbuf = _rxbuf;
+	
+	palSetPadMode(GPIOB, 1, PAL_MODE_INPUT_PULLUP);
+	palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(4)|PAL_STM32_PUDR_PULLUP|PAL_STM32_OTYPE_OPENDRAIN);// SCL
+    	palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(4)|PAL_STM32_PUDR_PULLUP|PAL_STM32_OTYPE_OPENDRAIN);// SDA
+    	
+    	static const I2CConfig i2cfg = {
+        OPMODE_I2C,
+        400000,
+        FAST_DUTY_CYCLE_2,
+    };
+    
+    i2cStart(&I2CD1, &i2cfg);	// start I2C 
+    
+	mpr121_setup();	// call MPR121 Setup 
+}
+
+void loop (void){
+	
+  	readTouchInputs();
+  	chThdSleepMilliseconds(10);
+  	
+ }
+
+void readTouchInputs(void){
+  if(!checkInterrupt()){
+    
+    //read the touch state from the MPR121
+    msg_t backmsg = i2cMasterReceive(&I2CD1, 0x5A, rxbuf, 2);
+    
+    uint8_t LSB = rxbuf[0];
+    uint8_t MSB = rxbuf[1];
+    
+    uint16_t touched = ((MSB << 8) | LSB); //16bits that make up the touch states
+
+    
+    for (int i=0; i < 12; i++){  // Check what electrodes were pressed
+      if(touched & (1<<i)){
+      
+        if(touchStates[i] == 0){
+          //pin i was just touched
+          LogTextMessage("pin: [%i] was just touched", i); 			// LogTextMessage(" was just touched");
+        
+        }else if(touchStates[i] == 1){
+          //pin i is still being touched
+        }  
+      
+        touchStates[i] = 1;      
+      }else{
+        if(touchStates[i] == 1){
+          LogTextMessage("pin: [%i] is no longer being touched", i); 	//pin i is no longer being touched
+       }       
+       touchStates[i] = 0;
+      } 
+    } 
+  }
+}
+
+
+void mpr121_setup(void){
+
+  set_register(0x5A, ELE_CFG, 0x00); 
+  
+  // Section A - Controls filtering when data is > baseline.
+  set_register(0x5A, MHD_R, 0x01);
+  set_register(0x5A, NHD_R, 0x01);
+  set_register(0x5A, NCL_R, 0x00);
+  set_register(0x5A, FDL_R, 0x00);
+
+  // Section B - Controls filtering when data is < baseline.
+  set_register(0x5A, MHD_F, 0x01);
+  set_register(0x5A, NHD_F, 0x01);
+  set_register(0x5A, NCL_F, 0xFF);
+  set_register(0x5A, FDL_F, 0x02);
+  
+  // Section C - Sets touch and release thresholds for each electrode
+  set_register(0x5A, ELE0_T, TOU_THRESH);
+  set_register(0x5A, ELE0_R, REL_THRESH);
+ 
+  set_register(0x5A, ELE1_T, TOU_THRESH);
+  set_register(0x5A, ELE1_R, REL_THRESH);
+  
+  set_register(0x5A, ELE2_T, TOU_THRESH);
+  set_register(0x5A, ELE2_R, REL_THRESH);
+  
+  set_register(0x5A, ELE3_T, TOU_THRESH);
+  set_register(0x5A, ELE3_R, REL_THRESH);
+  
+  set_register(0x5A, ELE4_T, TOU_THRESH);
+  set_register(0x5A, ELE4_R, REL_THRESH);
+  
+  set_register(0x5A, ELE5_T, TOU_THRESH);
+  set_register(0x5A, ELE5_R, REL_THRESH);
+  
+  set_register(0x5A, ELE6_T, TOU_THRESH);
+  set_register(0x5A, ELE6_R, REL_THRESH);
+  
+  set_register(0x5A, ELE7_T, TOU_THRESH);
+  set_register(0x5A, ELE7_R, REL_THRESH);
+  
+  set_register(0x5A, ELE8_T, TOU_THRESH);
+  set_register(0x5A, ELE8_R, REL_THRESH);
+  
+  set_register(0x5A, ELE9_T, TOU_THRESH);
+  set_register(0x5A, ELE9_R, REL_THRESH);
+  
+  set_register(0x5A, ELE10_T, TOU_THRESH);
+  set_register(0x5A, ELE10_R, REL_THRESH);
+  
+  set_register(0x5A, ELE11_T, TOU_THRESH);
+  set_register(0x5A, ELE11_R, REL_THRESH);
+  
+  // Section D
+  // Set the Filter Configuration
+  // Set ESI2
+  set_register(0x5A, FIL_CFG, 0x04);
+  
+  // Section E
+  // Electrode Configuration
+  // Set ELE_CFG to 0x00 to return to standby mode
+  set_register(0x5A, ELE_CFG, 0x0C);  // Enables all 12 Electrodes
+  
+  
+  // Section F
+  // Enable Auto Config and auto Reconfig
+  /*
+  set_register(0x5A, ATO_CFG0, 0x0B);
+  set_register(0x5A, ATO_CFGU, 0xC9);  // USL = (Vdd-0.7)/vdd*256 = 0xC9 @3.3V   set_register(0x5A, ATO_CFGL, 0x82);  // LSL = 0.65*USL = 0x82 @3.3V
+  set_register(0x5A, ATO_CFGT, 0xB5);  // Target = 0.9*USL = 0xB5 @3.3V
+  */
+  set_register(0x5A, ELE_CFG, 0x0C);
+  
+}
+
+
+void set_register(uint8_t address, uint8_t reg, uint8_t val){
+
+	chThdSleepMilliseconds(1);
+
+  	if (chThdShouldTerminate()) {
+        i2cStop(&I2CD1);
+        return;
+    }
+    
+   	txbuf[0] = reg;
+  	txbuf[1] = val;
+  	msg_t status = RDY_OK;
+  	i2cAcquireBus(&I2CD1);
+  	msg_t msg = i2c_lld_master_transmit_timeout(&I2CD1, 0x5A, txbuf, 2, rxbuf, 0, TIME_INFINITE);
+  	i2cReleaseBus(&I2CD1);
+
+  	if (msg != RDY_OK) {
+        LogTextMessage("error %i", i2cGetErrors(&I2CD1));
+        return;
+    }
+    else if (msg != RDY_OK) {
+        LogTextMessage("OK %i", i2cGetErrors(&I2CD1));
+        
+    }
+  	
+}
+
+uint8_t checkInterrupt(void){
+  return (palReadPad(GPIOB,1)<<27);
+}]]></sText>
+         </text>
+      </attribs>
+   </obj>
+   <nets/>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>624</x>
+      <y>26</y>
+      <width>1296</width>
+      <height>1009</height>
+   </windowPos>
+</patch-1.0>
