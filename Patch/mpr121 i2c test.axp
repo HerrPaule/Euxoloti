@@ -1,4 +1,8 @@
 <patch-1.0>
+   <obj type="gpio/i2c/config" sha="7c4d530913387b1b46daa870450c13d23424b282" uuid="b095a33e56de5fcd23740a7d983bc0bafb315d81" name="config_1" x="294" y="392">
+      <params/>
+      <attribs/>
+   </obj>
    <obj type="script/script2" sha="362a4413ceaefbe716480bf8f9c62eb3587fe6c0" uuid="d39e743cf47c9221f4e99c133430148cf74c68c5" name="script2_1" x="420" y="434">
       <params/>
       <attribs>
@@ -47,10 +51,10 @@
 #define	ELE_CFG	0x5E
 #define 	GPIO_CTRL0	0x73
 #define	GPIO_CTRL1	0x74
-#define 	GPIO_DATA	0x75
-#define	GPIO_DIR	0x76
+#define 	GPIO_DATA		0x75
+#define	GPIO_DIR		0x76
 #define	GPIO_EN		0x77
-#define	GPIO_SET	0x78
+#define	GPIO_SET		0x78
 #define	GPIO_CLEAR	0x79
 #define	GPIO_TOGGLE	0x7A
 #define	ATO_CFG0	0x7B
@@ -77,6 +81,7 @@ void setup (void){
 	rxbuf = _rxbuf;
 	
 	palSetPadMode(GPIOB, 1, PAL_MODE_INPUT_PULLUP);
+	/*
 	palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(4)|PAL_STM32_PUDR_PULLUP|PAL_STM32_OTYPE_OPENDRAIN);// SCL
     	palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(4)|PAL_STM32_PUDR_PULLUP|PAL_STM32_OTYPE_OPENDRAIN);// SDA
     	
@@ -87,14 +92,16 @@ void setup (void){
     };
     
     i2cStart(&I2CD1, &i2cfg);	// start I2C 
-    
+    */
 	mpr121_setup();	// call MPR121 Setup 
+
+	LogTextMessage("READY");
 }
 
 void loop (void){
 	
   	readTouchInputs();
-  	chThdSleepMilliseconds(10);
+  	chThdSleepMilliseconds(1);
   	
  }
 
@@ -212,12 +219,12 @@ void mpr121_setup(void){
 void set_register(uint8_t address, uint8_t reg, uint8_t val){
 
 	chThdSleepMilliseconds(1);
-
+	/*
   	if (chThdShouldTerminate()) {
         i2cStop(&I2CD1);
         return;
     }
-    
+    */
    	txbuf[0] = reg;
   	txbuf[1] = val;
   	msg_t status = RDY_OK;
@@ -248,9 +255,9 @@ uint8_t checkInterrupt(void){
    </settings>
    <notes><![CDATA[]]></notes>
    <windowPos>
-      <x>624</x>
+      <x>1187</x>
       <y>26</y>
-      <width>1296</width>
+      <width>733</width>
       <height>1009</height>
    </windowPos>
 </patch-1.0>
