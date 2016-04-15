@@ -1,0 +1,106 @@
+<patch-1.0>
+   <obj type="gpio/spi/config" sha="62af644b09e7f654b36d66533da8ea5971ddb351" uuid="d3e75d8a02e2ccabbbc2af3bc2fcdb8ea65a6133" name="config_1" x="42" y="28">
+      <params/>
+      <attribs>
+         <combo attributeName="clock_polarity" selection="CPOL=1"/>
+         <combo attributeName="clock_phase" selection="CPHA=0"/>
+         <combo attributeName="baudrate" selection="FPCLK/32"/>
+         <combo attributeName="format" selection="MSB first"/>
+      </attribs>
+   </obj>
+   <comment type="patch/comment" x="168" y="28" text="AXO = DAC8552"/>
+   <comment type="patch/comment" x="168" y="42" text="PA4 = PIN5 "/>
+   <comment type="patch/comment" x="168" y="56" text="PA5 = PIN6 "/>
+   <comment type="patch/comment" x="168" y="70" text="PA7 = PIN7"/>
+   <obj type="lfo/sine" sha="a2851b3d62ed0faceefc98038d9571422f0ce260" uuid="75f7330c26a13953215dccc3b7b9008545c9daa9" name="sine_1" x="42" y="154">
+      <params>
+         <frac32.s.map name="pitch" value="-56.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="conv/bipolar2unipolar" sha="93baeaf78c9a228f23225186d21e61abc921c3d6" uuid="f6f63d71053d572d3c795f83c7ec11dfbbce82dd" name="bipolar2unipolar_3" x="168" y="154">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="lfo/saw" sha="bce38cfb8c1d56d3c98a8df7986ddf379f982033" uuid="ef2a162678b533c5e46c4e3c0decba17b1862d85" name="saw_1" x="42" y="238">
+      <params>
+         <frac32.s.map name="pitch" value="-31.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="script/script2" sha="362a4413ceaefbe716480bf8f9c62eb3587fe6c0" uuid="d39e743cf47c9221f4e99c133430148cf74c68c5" name="MCP4x22" x="322" y="238">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[/* script2 
+ 	by Paul 2016
+ 	example for SPI & DAC8552 16bit 
+
+	Pinouts SPI:
+ 	AXO PA4 = DAC PIN 5
+ 	AXO PA5 = DAC PIN 6
+ 	AXO PA7 = DAC PIN 7
+ */
+
+uint8_t *txbuf;
+
+void setup(void){
+	
+	static uint8_t _txbuf[32] __attribute__ ((section (".sram2")));
+	txbuf = _txbuf;
+
+}
+
+void loop(void){
+	
+	uint16_t dacA = (in1 >> 11);	// in1 = dac output ch.1
+	uint16_t dacB = (in2 >> 11);	// in2 = dac output ch.2
+
+	// output ch.1
+	spiSelect(&SPID1);		// CS pin LOW, start data transmitting…
+	txbuf[0] = 0x18;		// Load data to buffer A
+	txbuf[1] = dacA >> 8;	// First byte of data that should be output
+	txbuf[2] = dacA;		// Secound byte of data that should be output
+  	spiSend(&SPID1,3,txbuf);	// send txbuf
+  	spiUnselect(&SPID1);	// CS pin HIGH end transmitting…
+	
+	// chThdSleepMilliseconds(1);
+	// output ch.2
+	spiSelect(&SPID1);
+	txbuf[0] = 0x24;
+	txbuf[1] = dacB >> 8;
+	txbuf[2] = dacB;
+  	spiSend(&SPID1,3,txbuf);
+  	spiUnselect(&SPID1);
+	
+	// chThdSleepMilliseconds(1);
+
+}]]></sText>
+         </text>
+      </attribs>
+   </obj>
+   <nets>
+      <net>
+         <source obj="sine_1" outlet="wave"/>
+         <dest obj="bipolar2unipolar_3" inlet="i"/>
+      </net>
+      <net>
+         <source obj="bipolar2unipolar_3" outlet="o"/>
+         <dest obj="MCP4x22" inlet="in1_"/>
+      </net>
+      <net>
+         <source obj="saw_1" outlet="wave"/>
+         <dest obj="MCP4x22" inlet="in2_"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>539</x>
+      <y>238</y>
+      <width>1072</width>
+      <height>695</height>
+   </windowPos>
+</patch-1.0>
