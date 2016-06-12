@@ -1,0 +1,101 @@
+<patch-1.0 appVersion="1.0.10">
+   <obj type="gpio/serial/config" uuid="8ec617bbe7b552a58656442e87513d8b4c69833a" name="config_1" x="14" y="0">
+      <params/>
+      <attribs>
+         <combo attributeName="baudrate" selection="115200"/>
+      </attribs>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_1" x="14" y="56">
+      <params>
+         <frac32.u.map name="value" value="16.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="script/script2" sha="362a4413ceaefbe716480bf8f9c62eb3587fe6c0" uuid="d39e743cf47c9221f4e99c133430148cf74c68c5" name="script2_1" x="112" y="56">
+      <params/>
+      <attribs>
+         <text attributeName="script">
+            <sText><![CDATA[/*  uart communication between arduino and axoloti core (v.1.0)
+ *  by Paul 2016
+ *  
+ *  Serial Port connection:
+ *  arduino RX -> axoloti core TX(PA2)
+ *  arduino TX -> axoloti core RX(PA3)
+ *  
+ *  serial baudrate = 115200
+ */
+uint8_t *rxbuf;
+uint8_t *txbuf;
+
+void setup (void){
+	static uint8_t _txbuf[8] __attribute__ ((section (".sram2")));
+	static uint8_t _rxbuf[8] __attribute__ ((section (".sram2")));
+	txbuf = _txbuf;
+	rxbuf = _rxbuf;
+	
+}
+
+void loop (void){
+	// LED control 0-255. Message: l/ LED1 LED2 LED3 LED4
+	txbuf[0]= 108;		// ASCII number for "l"
+	txbuf[1]= 47;		// ASCII number for "/"
+	txbuf[2]= in1>>19;
+	txbuf[3]= in1>>20;
+	txbuf[4]=	in2>>19;
+	txbuf[5]=	in2>>20;
+	sdWrite(&SD2, txbuf, 6);
+
+	// send string. "x/" signals start of string and ";" end of string e.g. "x/ your message here ;"
+	char data[] = "x/Hello World!;";	
+	sdWrite(&SD2, (uint8_t *) data, strlen(data));
+	// uncomment to receive message by serial
+	
+	// check if there is any message at the serial buffer. 
+	// sdRead(&SD2,rxbuf, (number of bytes) to receive more bytes in one turn.
+	rxbuf[0] = sdGet(&SD2);
+	out1 = rxbuf[0];
+	//print out received messages to axoloti patcher console
+	LogTextMessage("serial: %i", rxbuf[0]);
+	
+	// take a little break ;-)
+	chThdSleepMilliseconds(500);
+}
+]]></sText>
+         </text>
+      </attribs>
+   </obj>
+   <obj type="disp/hex" uuid="87617898f70d90033f8add921438bf0d11721fdd" name="hex_2" x="224" y="56">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="ctrl/dial p" uuid="cc5d2846c3d50e425f450c4b9851371b54f4d674" name="dial_2" x="14" y="154">
+      <params>
+         <frac32.u.map name="value" value="24.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="dial_1" outlet="out"/>
+         <dest obj="script2_1" inlet="in1_"/>
+      </net>
+      <net>
+         <source obj="dial_2" outlet="out"/>
+         <dest obj="script2_1" inlet="in2_"/>
+      </net>
+      <net>
+         <source obj="script2_1" outlet="out1_"/>
+         <dest obj="hex_2" inlet="in"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>1261</x>
+      <y>23</y>
+      <width>400</width>
+      <height>400</height>
+   </windowPos>
+</patch-1.0>
