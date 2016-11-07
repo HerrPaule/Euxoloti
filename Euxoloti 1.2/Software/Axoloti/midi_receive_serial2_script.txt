@@ -1,0 +1,139 @@
+/* updated scripted based on "extra midi input.axh" 
+ * org. by Johannes Taelman
+ * mod by Paul
+ * 
+ * This script reads midi messages by serial port 2 (PA2/TX & PA3/RX).
+ * You will need to initialize the serial port by config object ("gpio/serial/config").
+ * For Midi receive use a baudrate of 31250. 
+ * 
+ * For more information check the midi handle routine at: midi.c and serial_midi.c
+ * https://github.com/axoloti/axoloti/tree/master/firmware
+ * 
+ * known bugs:
+ * - If midi messages haven't been send continuously till exit "live" mode the Axoloti Core will be disconnected from Patcher and needs to be powered off/on before it connects to Patcher again.
+ *	Midi message will be still transmitted and read only a connection to Axoloti Patch won't work.  
+ *
+ */
+
+uint8_t *midiReceive;
+
+uint8_t StatusToMsgLength(uint8_t t){
+	switch(t) {
+	case 0x0:
+	case 0x1:
+	case 0x2:
+	case 0x3:
+	case 0x4:
+	case 0x5:
+	case 0x6:
+	case 0x7:
+		return 0;
+	case 0x8:
+	case 0x9:
+	case 0xa:
+	case 0xb:
+		return 3;
+	case 0xc:
+	case 0xd:
+		return 2;
+	case 0xe:
+		return 3;
+	default:
+		return -1;
+	}
+}
+
+uint8_t SysToMsgLength(uint8_t t){
+    switch(t) {
+	case 0x0:
+		return -1; // 0xf0=sysex start. may vary
+	case 0x1:
+		return 2; // 0xf1=MIDI Time Code. 2 bytes
+	case 0x2:
+		return 3; // 0xf2=MIDI Song position. 3 bytes
+	case 0x3:
+		return 2; // 0xf3=MIDI Song Select. 2 bytes.
+	case 0x4:
+		return 1; // 0xf4=undefined
+	case 0x5:
+		return 1; // 0xf5=undefined
+	case 0x6:
+		return 1; // 0xf6=TUNE Request
+	case 0x7:
+		return 1; // 0xf7=sysex end.
+	case 0x8:
+		return 1; // 0xf8=timing clock. 1 byte
+	case 0x9:
+		return 1; // 0xf9=proposed measure end?
+	case 0xa:
+		return 1; // 0xfa=start. 1 byte
+	case 0xb:
+		return 1; // 0xfb=continue. 1 byte
+	case 0xc:
+		return 1; // 0xfc=stop. 1 byte
+	case 0xd:
+		return 1; // 0xfd=undefined
+	case 0xe:
+		return 1; // 0xfe=active sensing. 1 byte
+	case 0xf:
+	default:
+		return 3; // 0xff= not reset, but a META-EVENT, which is always 3 bytes
+	}
+}
+
+unsigned char MidiByte0;
+unsigned char MidiByte1;
+unsigned char MidiByte2;
+unsigned char MidiCurData;
+unsigned char MidiNumData;
+
+void setup(void){
+	static uint8_t _midiReceive[5] __attribute__ ((section (".sram2")));
+	midiReceive = _midiReceive;
+	MidiNumData = 0;
+  	MidiCurData = 0;
+	LogTextMessage("=============== Axo Serial 2 Debug =============== ");
+}
+
+void MidiInByteHandler(uint8_t data) {
+	int8_t len;
+  if (data & 0x80) {
+    len = StatusToMsgLength(data >> 4);
+    if (len == -1) {
+      len = SysToMsgLength(data - 0xF0);
+    }
+    if (len == 1) {
+      MidiInMsgHandler((midi_device_t)MIDI_DEVICE_INTERNAL, 0,data,0,0);
+    } else {
+      MidiByte0 = data;
+      MidiNumData = len - 1;
+      MidiCurData = 0;
+    }
+  }
+  else // not a status byte
+  {
+    if (MidiCurData == 0) {
+      MidiByte1 = data;
+      if (MidiNumData == 1) {
+        // 2 byte message complete
+        MidiInMsgHandler((midi_device_t)MIDI_DEVICE_INTERNAL, 0,MidiByte0, MidiByte1, 0);
+        MidiCurData = 0;
+      }
+      else
+        MidiCurData++;
+    }
+    else if (MidiCurData == 1) {
+      MidiByte2 = data;
+      if (MidiNumData == 2) {
+		MidiInMsgHandler((midi_device_t)MIDI_DEVICE_INTERNAL, 1, MidiByte0, MidiByte1,MidiByte2);
+		//LogTextMessage("MIDITYPE: %i CC#: %i Value: %i", MidiByte0, MidiByte1,MidiByte2);
+
+      }
+    }
+  }
+}
+
+void loop(void){
+	char ch = sdGet(&SD2);
+   	MidiInByteHandler(ch);	
+}
