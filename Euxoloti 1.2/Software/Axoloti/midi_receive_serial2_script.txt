@@ -1,6 +1,7 @@
 /* updated scripted based on "extra midi input.axh" 
  * org. by Johannes Taelman
  * mod by Paul
+ * version 1.0
  * 
  * This script reads midi messages by serial port 2 (PA2/TX & PA3/RX).
  * You will need to initialize the serial port by config object ("gpio/serial/config").
@@ -14,8 +15,6 @@
  *	Midi message will be still transmitted and read only a connection to Axoloti Patch won't work.  
  *
  */
-
-uint8_t *midiReceive;
 
 uint8_t StatusToMsgLength(uint8_t t){
 	switch(t) {
@@ -81,22 +80,21 @@ uint8_t SysToMsgLength(uint8_t t){
 	}
 }
 
+
 unsigned char MidiByte0;
 unsigned char MidiByte1;
 unsigned char MidiByte2;
 unsigned char MidiCurData;
 unsigned char MidiNumData;
 
-void setup(void){
-	static uint8_t _midiReceive[5] __attribute__ ((section (".sram2")));
-	midiReceive = _midiReceive;
-	MidiNumData = 0;
-  	MidiCurData = 0;
-	LogTextMessage("=============== Axo Serial 2 Debug =============== ");
+void setup(){
+  MidiNumData = 0;
+  MidiCurData = 0;
 }
 
+
 void MidiInByteHandler(uint8_t data) {
-	int8_t len;
+  int8_t len;
   if (data & 0x80) {
     len = StatusToMsgLength(data >> 4);
     if (len == -1) {
@@ -125,15 +123,30 @@ void MidiInByteHandler(uint8_t data) {
     else if (MidiCurData == 1) {
       MidiByte2 = data;
       if (MidiNumData == 2) {
-		MidiInMsgHandler((midi_device_t)MIDI_DEVICE_INTERNAL, 1, MidiByte0, MidiByte1,MidiByte2);
-		//LogTextMessage("MIDITYPE: %i CC#: %i Value: %i", MidiByte0, MidiByte1,MidiByte2);
-
+        MidiInMsgHandler((midi_device_t)MIDI_DEVICE_INTERNAL, 0,MidiByte0, MidiByte1, MidiByte2);
+        MidiCurData = 0;
       }
     }
   }
 }
 
-void loop(void){
-	char ch = sdGet(&SD2);
-   	MidiInByteHandler(ch);	
+void loop(){
+    char ch = sdGet(&SD2);
+    MidiInByteHandler(ch);
+
+	sdPut(&SD2,0xb0);
+  	sdPut(&SD2,0);
+  	sdPut(&SD2,led1>>20);
+
+	sdPut(&SD2,0xb0);
+  	sdPut(&SD2,1);
+  	sdPut(&SD2,led2>>20);
+
+  	sdPut(&SD2,0xb0);
+  	sdPut(&SD2,2);
+  	sdPut(&SD2,led3>>20);
+
+  	sdPut(&SD2,0xb0);
+  	sdPut(&SD2,3);
+  	sdPut(&SD2,led4>>20);
 }
