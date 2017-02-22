@@ -25,6 +25,7 @@ MIDI_CREATE_INSTANCE(HardwareSerial, Serial3, euxo);  // select Serial 3 for MID
 const int button[] = {22, 21, 20, 19};
 const int led[] = {25, 16, 26, 11};
 const int pot[] = {10, 9, 8, 7, 4, 3, 5, 6};
+const int onboardLed= PB1;
 
 // button state section
 int buttonState[4];
@@ -47,8 +48,7 @@ int adcBuf[10];         // adc read buffer
 uint32_t adcTempValue;  // temporary storage
 bool ioStatus = false;
 
-void midiReset () {
-  // not used at the moment
+void midiReset () {     // not used at the moment
 }
 
 void ccIn (byte channel, byte number, byte value) {
@@ -80,7 +80,7 @@ void setup() {
   //Serial.begin(115200);
   euxo.begin(midiCh_In);                  // start MIDI
   euxo.turnThruOff();                     // turn MIDI through off
-  // pinMode(PB1, OUTPUT);                // maple mini onboard LED
+  pinMode(onboardLed, OUTPUT);                // maple mini onboard LED
 
   for (int i = 0; i < 4; i++) {           // setup pins for LED, BUTTON and GATE inputs.
     pinMode(button[i], INPUT);
@@ -95,10 +95,20 @@ void setup() {
   euxo.setHandleControlChange(ccIn);      // midi handle for Control Change messages = leds
   euxo.setHandleNoteOn(handleNoteOn);     // midi handle for Note On. Not used but usefull for callback tasks.
   euxo.setHandleSystemReset(midiReset);   // not used at the moment
+  digitalWrite(onboardLed,HIGH);
 }
 
 void loop() {
   euxo.read();                                        // check if there is any incoming midi message
+  bool mCheck = euxo.check();
+
+  if (mCheck == true){
+    digitalWrite(onboardLed,LOW);
+  }
+  else {
+    digitalWrite(onboardLed,HIGH);
+  }
+  
   // BUTTON SECTION
   for (int x = 0; x < 4; x++) {                       // go through every pin
     buttonReading[x] = digitalRead(button[x]);        // read current pin state
